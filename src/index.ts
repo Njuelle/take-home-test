@@ -1,5 +1,4 @@
 import { Store, DiscountOffer } from "./store";
-
 import fs from "fs";
 
 const discountOffers = [
@@ -8,8 +7,8 @@ const discountOffers = [
   new DiscountOffer("Vinted", 5, 40),
   new DiscountOffer("Ilek", 15, 40),
 ];
-const store = new Store(discountOffers);
 
+const store = new Store(discountOffers);
 const log = [];
 
 for (let elapsedDays = 0; elapsedDays < 30; elapsedDays++) {
