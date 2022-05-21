@@ -10,12 +10,16 @@ describe("Store", () => {
       expect(
         new Store([new DiscountOffer("test", 2, 3)]).updateDiscounts()
       ).toEqual([new DiscountOffer("test", 1, 2)]);
+
+      expect(
+        new Store([new DiscountOffer("test", 2, 2)]).updateDiscounts()
+      ).toEqual([new DiscountOffer("test", 1, 1)]);
     });
 
     it("should decrease the discount twice as fast if the expiration date has passed", () => {
       expect(
         new Store([new DiscountOffer("test", 0, 3)]).updateDiscounts()
-      ).toEqual([new DiscountOffer("test", 0, 1)]);
+      ).toEqual([new DiscountOffer("test", -1, 1)]);
     });
 
     it("should not decrease the discount if it is already equal to zero", () => {
@@ -24,10 +28,18 @@ describe("Store", () => {
       ).toEqual([new DiscountOffer("test", 1, 0)]);
     });
 
-    it("should not decrease the expiration if it is already equal to zero", () => {
+    it("should not decrease the discount less than zero", () => {
       expect(
         new Store([new DiscountOffer("test", 0, 0)]).updateDiscounts()
-      ).toEqual([new DiscountOffer("test", 0, 0)]);
+      ).toEqual([new DiscountOffer("test", -1, 0)]);
+
+      expect(
+        new Store([new DiscountOffer("test", 0, 2)]).updateDiscounts()
+      ).toEqual([new DiscountOffer("test", -1, 0)]);
+
+      expect(
+        new Store([new DiscountOffer("test", 0, 1)]).updateDiscounts()
+      ).toEqual([new DiscountOffer("test", -1, 0)]);
     });
   });
 
@@ -41,7 +53,7 @@ describe("Store", () => {
     it("should increases the discount twice as fast after the expiration date", () => {
       expect(
         new Store([new NaturaliaOffer("test", 0, 2)]).updateDiscounts()
-      ).toEqual([new NaturaliaOffer("test", 0, 4)]);
+      ).toEqual([new NaturaliaOffer("test", -1, 4)]);
     });
 
     it("should not increases the discount more than 50", () => {
@@ -52,6 +64,10 @@ describe("Store", () => {
       expect(
         new Store([new NaturaliaOffer("test", 2, 49)]).updateDiscounts()
       ).toEqual([new NaturaliaOffer("test", 1, 50)]);
+
+      expect(
+        new Store([new NaturaliaOffer("test", 0, 49)]).updateDiscounts()
+      ).toEqual([new NaturaliaOffer("test", -1, 50)]);
     });
   });
 
@@ -85,7 +101,7 @@ describe("Store", () => {
     it("should drops discount to 0 after the expiration date", () => {
       expect(
         new Store([new VintedOffer("test", 0, 2)]).updateDiscounts()
-      ).toEqual([new VintedOffer("test", 0, 0)]);
+      ).toEqual([new VintedOffer("test", -1, 0)]);
     });
 
     it("should not increases the discount more than 50", () => {
@@ -96,6 +112,28 @@ describe("Store", () => {
       expect(
         new Store([new NaturaliaOffer("test", 2, 49)]).updateDiscounts()
       ).toEqual([new NaturaliaOffer("test", 1, 50)]);
+
+      expect(
+        new Store([new NaturaliaOffer("test", 8, 50)]).updateDiscounts()
+      ).toEqual([new NaturaliaOffer("test", 7, 50)]);
+
+      expect(
+        new Store([new NaturaliaOffer("test", 8, 49)]).updateDiscounts()
+      ).toEqual([new NaturaliaOffer("test", 7, 50)]);
+
+      expect(
+        new Store([new NaturaliaOffer("test", 12, 50)]).updateDiscounts()
+      ).toEqual([new NaturaliaOffer("test", 11, 50)]);
+
+      expect(
+        new Store([new NaturaliaOffer("test", 12, 49)]).updateDiscounts()
+      ).toEqual([new NaturaliaOffer("test", 11, 50)]);
+    });
+
+    it("should not increase discount if the offer is expired", () => {
+      expect(
+        new Store([new BackMarketOffer("test", 0, 10)]).updateDiscounts()
+      ).toEqual([new BackMarketOffer("test", -1, 10)]);
     });
   });
 
@@ -106,10 +144,22 @@ describe("Store", () => {
       ).toEqual([new BackMarketOffer("test", 9, 8)]);
     });
 
+    it("should not decrease the discount if it is already equal to zero", () => {
+      expect(
+        new Store([new BackMarketOffer("test", 10, 0)]).updateDiscounts()
+      ).toEqual([new BackMarketOffer("test", 9, 0)]);
+    });
+
     it("should decrease discount less than zero", () => {
       expect(
         new Store([new BackMarketOffer("test", 10, 1)]).updateDiscounts()
       ).toEqual([new BackMarketOffer("test", 9, 0)]);
+    });
+
+    it("should not decrease discount if the offer is expired", () => {
+      expect(
+        new Store([new BackMarketOffer("test", 0, 10)]).updateDiscounts()
+      ).toEqual([new BackMarketOffer("test", -1, 10)]);
     });
   });
 });
