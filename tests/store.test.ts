@@ -2,6 +2,7 @@ import { Store, DiscountOffer } from "../src/store";
 import { NaturaliaOffer } from "../src/naturalia";
 import { IlekOffer } from "../src/ilek";
 import { VintedOffer } from "../src/vinted";
+import { BackMarketOffer } from "../src/backMarket";
 
 describe("Store", () => {
   describe("Default discount offer", () => {
@@ -81,6 +82,20 @@ describe("Store", () => {
       expect(
         new Store([new VintedOffer("test", 0, 2)]).updateDiscounts()
       ).toEqual([new VintedOffer("test", 0, 0)]);
+    });
+  });
+
+  describe("BackMarket discount offer", () => {
+    it("should decrease discount by 2 percent per day", () => {
+      expect(
+        new Store([new BackMarketOffer("test", 10, 10)]).updateDiscounts()
+      ).toEqual([new BackMarketOffer("test", 9, 8)]);
+    });
+
+    it("should decrease discount less than zero", () => {
+      expect(
+        new Store([new BackMarketOffer("test", 10, 1)]).updateDiscounts()
+      ).toEqual([new BackMarketOffer("test", 9, 0)]);
     });
   });
 });
