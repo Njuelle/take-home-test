@@ -1,5 +1,6 @@
 import { Store, DiscountOffer } from "../src/store";
 import { NaturaliaOffer } from "../src/naturalia";
+import { IlekOffer } from "../src/ilek";
 
 describe("Store", () => {
   describe("Default discount offer", () => {
@@ -45,6 +46,14 @@ describe("Store", () => {
       expect(
         new Store([new NaturaliaOffer("test", 2, 50)]).updateDiscounts()
       ).toEqual([new NaturaliaOffer("test", 1, 50)]);
+    });
+  });
+
+  describe("Ilek discount offer", () => {
+    it("should never expires nor decreases", () => {
+      expect(
+        new Store([new IlekOffer("test", 10, 10)]).updateDiscounts()
+      ).toEqual([new IlekOffer("test", 10, 10)]);
     });
   });
 });
