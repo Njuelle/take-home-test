@@ -9,6 +9,11 @@ export class DiscountOffer {
     public discountRateInPercent: number
   ) {}
 
+  /**
+   * Check if the discount rate percent should be updated or not.
+   *
+   * @return boolean
+   */
   shouldUpdateDiscount(): boolean {
     return (
       this.discountRateInPercent > 0 &&
@@ -16,6 +21,11 @@ export class DiscountOffer {
     );
   }
 
+  /**
+   * Decrease the expiration date by one day only if needed.
+   *
+   * @return void
+   */
   decreaseExpiration(): void {
     if (this.expiresIn === 0) {
       return;
@@ -24,6 +34,12 @@ export class DiscountOffer {
     this.expiresIn--;
   }
 
+  /**
+   * Update the discount rate following the default offer rules.
+   * (see the "Default discount offer" tests in store.test.ts)
+   *
+   * @return void
+   */
   updateDiscountRate(): void {
     if (!this.shouldUpdateDiscount()) {
       this.decreaseExpiration();
