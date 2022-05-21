@@ -12,13 +12,13 @@ export class BackMarketOffer extends DiscountOffer {
   }
 
   public updateDiscountRate(): void {
+    this.decreaseExpiration();
+
     if (!this.shouldUpdateDiscount()) {
-      this.decreaseExpiration();
       return;
     }
 
     if (this.expiresIn > 0) {
-      this.decreaseExpiration();
       this.discountRateInPercent =
         this.discountRateInPercent > 1
           ? (this.discountRateInPercent =

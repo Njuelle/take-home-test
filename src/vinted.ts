@@ -15,19 +15,18 @@ export class VintedOffer extends DiscountOffer {
   }
 
   public updateDiscountRate(): void {
+    this.decreaseExpiration();
+
     if (!this.shouldUpdateDiscount()) {
-      this.decreaseExpiration();
       return;
     }
 
     if (this.expiresIn > 0) {
-      this.decreaseExpiration();
-
       switch (true) {
-        case this.expiresIn < 5:
+        case this.expiresIn <= 5:
           this.discountRateInPercent += INCREASE_RATE_FOR_FIVE_DAYS_LEFT;
           break;
-        case this.expiresIn < 10:
+        case this.expiresIn <= 10:
           this.discountRateInPercent += INCREASE_RATE_FOR_TEN_DAYS_LEFT;
           break;
         default:

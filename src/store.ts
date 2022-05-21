@@ -22,15 +22,11 @@ export class DiscountOffer {
   }
 
   /**
-   * Decrease the number of days to expiration by one day only if needed.
+   * Decrease the number of days to expiration by one day.
    *
    * @return void
    */
   decreaseExpiration(): void {
-    if (this.expiresIn === 0) {
-      return;
-    }
-
     this.expiresIn--;
   }
 
@@ -42,13 +38,13 @@ export class DiscountOffer {
    * @return void
    */
   updateDiscountRate(): void {
+    this.decreaseExpiration();
+
     if (!this.shouldUpdateDiscount()) {
-      this.decreaseExpiration();
       return;
     }
 
     if (this.expiresIn > 0) {
-      this.decreaseExpiration();
       this.discountRateInPercent -= DECREASE_RATE_BY_DAY;
     } else {
       this.discountRateInPercent =
@@ -60,7 +56,7 @@ export class DiscountOffer {
 }
 
 export class Store {
-  constructor(public discountOffers: DiscountOffer[]) {}
+  constructor(public discountOffers: DiscountOffer[] = []) {}
 
   updateDiscounts() {
     for (const discountOffer of this.discountOffers) {

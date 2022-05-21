@@ -14,13 +14,13 @@ export class NaturaliaOffer extends DiscountOffer {
   }
 
   public updateDiscountRate(): void {
+    this.decreaseExpiration();
+
     if (!this.shouldUpdateDiscount()) {
-      this.decreaseExpiration();
       return;
     }
 
     if (this.expiresIn > 0) {
-      this.decreaseExpiration();
       this.discountRateInPercent += INCREASE_RATE_BY_DAY;
     } else {
       this.discountRateInPercent += INCREASE_RATE_BY_DAY_AFTER_EXPIRATION;
