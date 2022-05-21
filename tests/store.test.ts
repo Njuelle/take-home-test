@@ -1,4 +1,5 @@
-import { Store, DiscountOffer, NaturaliaOffer } from "../src/store";
+import { Store, DiscountOffer } from "../src/store";
+import { NaturaliaOffer } from "../src/naturalia";
 
 describe("Store", () => {
   describe("Default discount offer", () => {
@@ -24,6 +25,26 @@ describe("Store", () => {
       expect(
         new Store([new DiscountOffer("test", 0, 0)]).updateDiscounts()
       ).toEqual([new DiscountOffer("test", 0, 0)]);
+    });
+  });
+
+  describe("Naturalia discount offer", () => {
+    it("should increases the discount the older it gets", () => {
+      expect(
+        new Store([new NaturaliaOffer("test", 2, 1)]).updateDiscounts()
+      ).toEqual([new NaturaliaOffer("test", 1, 2)]);
+    });
+
+    it("should increases the discount twice as fast after the expiration date", () => {
+      expect(
+        new Store([new NaturaliaOffer("test", 0, 2)]).updateDiscounts()
+      ).toEqual([new NaturaliaOffer("test", 0, 4)]);
+    });
+
+    it("should not increases the discount more than 50", () => {
+      expect(
+        new Store([new NaturaliaOffer("test", 2, 50)]).updateDiscounts()
+      ).toEqual([new NaturaliaOffer("test", 1, 50)]);
     });
   });
 });
