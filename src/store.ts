@@ -22,7 +22,7 @@ export class DiscountOffer {
   }
 
   /**
-   * Decrease the expiration date by one day only if needed.
+   * Decrease the number of days to expiration by one day only if needed.
    *
    * @return void
    */
@@ -36,7 +36,8 @@ export class DiscountOffer {
 
   /**
    * Update the discount rate following the default offer rules.
-   * (see the "Default discount offer" tests in store.test.ts)
+   * (See the "Default discount offer" tests in store.test.ts
+   * for more details about the default discount rules)
    *
    * @return void
    */
