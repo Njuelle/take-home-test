@@ -48,6 +48,10 @@ describe("Store", () => {
       expect(
         new Store([new NaturaliaOffer("test", 2, 50)]).updateDiscounts()
       ).toEqual([new NaturaliaOffer("test", 1, 50)]);
+
+      expect(
+        new Store([new NaturaliaOffer("test", 2, 49)]).updateDiscounts()
+      ).toEqual([new NaturaliaOffer("test", 1, 50)]);
     });
   });
 
@@ -82,6 +86,16 @@ describe("Store", () => {
       expect(
         new Store([new VintedOffer("test", 0, 2)]).updateDiscounts()
       ).toEqual([new VintedOffer("test", 0, 0)]);
+    });
+
+    it("should not increases the discount more than 50", () => {
+      expect(
+        new Store([new NaturaliaOffer("test", 2, 50)]).updateDiscounts()
+      ).toEqual([new NaturaliaOffer("test", 1, 50)]);
+
+      expect(
+        new Store([new NaturaliaOffer("test", 2, 49)]).updateDiscounts()
+      ).toEqual([new NaturaliaOffer("test", 1, 50)]);
     });
   });
 
