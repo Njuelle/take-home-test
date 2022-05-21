@@ -1,6 +1,7 @@
 import { Store, DiscountOffer } from "../src/store";
 import { NaturaliaOffer } from "../src/naturalia";
 import { IlekOffer } from "../src/ilek";
+import { VintedOffer } from "../src/vinted";
 
 describe("Store", () => {
   describe("Default discount offer", () => {
@@ -54,6 +55,32 @@ describe("Store", () => {
       expect(
         new Store([new IlekOffer("test", 10, 10)]).updateDiscounts()
       ).toEqual([new IlekOffer("test", 10, 10)]);
+    });
+  });
+
+  describe("Vinted discount offer", () => {
+    it("should increases the discount the older it gets", () => {
+      expect(
+        new Store([new VintedOffer("test", 20, 2)]).updateDiscounts()
+      ).toEqual([new VintedOffer("test", 19, 3)]);
+    });
+
+    it("should increases increases by 2 the discount when there are 10 days or less", () => {
+      expect(
+        new Store([new VintedOffer("test", 10, 2)]).updateDiscounts()
+      ).toEqual([new VintedOffer("test", 9, 4)]);
+    });
+
+    it("should increases increases by 3 the discount when there are 5 days or less", () => {
+      expect(
+        new Store([new VintedOffer("test", 5, 2)]).updateDiscounts()
+      ).toEqual([new VintedOffer("test", 4, 5)]);
+    });
+
+    it("should drops discount to 0 after the expiration date", () => {
+      expect(
+        new Store([new VintedOffer("test", 0, 2)]).updateDiscounts()
+      ).toEqual([new VintedOffer("test", 0, 0)]);
     });
   });
 });
