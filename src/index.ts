@@ -14,14 +14,14 @@ const discountOffers = [
 ];
 
 const store = new Store(discountOffers);
-const log = [];
+const log: string[] = [];
 
 for (let elapsedDays = 0; elapsedDays < 30; elapsedDays++) {
-  log.push(store.updateDiscounts());
+  log.push(JSON.stringify(store.updateDiscounts()));
 }
 
 /* eslint-disable no-console */
-fs.writeFile("output.txt", JSON.stringify(log), (err) => {
+fs.writeFile("output.txt", log.join(","), (err) => {
   if (err) {
     console.error(err);
   } else {
