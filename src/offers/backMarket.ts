@@ -1,4 +1,4 @@
-import { DiscountOffer } from "./store";
+import { DiscountOffer } from "../store";
 
 const DECREASE_RATE_BY_DAY = 2;
 

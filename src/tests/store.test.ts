@@ -1,8 +1,8 @@
-import { Store, DiscountOffer } from "../src/store";
-import { NaturaliaOffer } from "../src/naturalia";
-import { IlekOffer } from "../src/ilek";
-import { VintedOffer } from "../src/vinted";
-import { BackMarketOffer } from "../src/backMarket";
+import { Store, DiscountOffer } from "../store";
+import { NaturaliaOffer } from "../offers/naturalia";
+import { IlekOffer } from "../offers/ilek";
+import { VintedOffer } from "../offers/vinted";
+import { BackMarketOffer } from "../offers/backMarket";
 
 describe("Store", () => {
   describe("Default discount offer", () => {

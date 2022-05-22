@@ -1,4 +1,4 @@
-import { DiscountOffer } from "./store";
+import { DiscountOffer } from "../store";
 
 const INCREASE_RATE_BY_DAY = 1;
 const INCREASE_RATE_BY_DAY_AFTER_EXPIRATION = 2;

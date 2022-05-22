@@ -1,9 +1,9 @@
 import { Store, DiscountOffer } from "./store";
 import fs from "fs";
-import { NaturaliaOffer } from "./naturalia";
-import { VintedOffer } from "./vinted";
-import { IlekOffer } from "./ilek";
-import { BackMarketOffer } from "./backMarket";
+import { NaturaliaOffer } from "./offers/naturalia";
+import { VintedOffer } from "./offers/vinted";
+import { IlekOffer } from "./offers/ilek";
+import { BackMarketOffer } from "./offers/backMarket";
 
 const discountOffers = [
   new DiscountOffer("Velib", 20, 30),
