@@ -2,6 +2,3 @@ version: "3"
 services:
   greenly:
     build: .
-    volumes:
-      - ".:/usr/src"
-      - /usr/src/node_modules

@@ -1,10 +1,11 @@
-FROM node:12.10.0-alpine
+FROM node:lts-alpine
 
 WORKDIR /usr/src
 
-COPY package.json /usr/src/package.json
-RUN yarn install
-
 COPY . /usr/src/
+
+RUN yarn install
+RUN yarn build
+
 
 CMD ["yarn", "start"]
